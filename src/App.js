@@ -68,9 +68,10 @@ function App() {
 
   const setDone = (i)=>{
     console.log(i)
-          let allTodos = listArr.map((element, index) => {
+          let allTodos = listArr.filter((element, index) => {
               element.isEditing = false;
-              return element;
+              if(element.text) return element;
+              return false
           });
         setListArr(allTodos);
   }
@@ -83,10 +84,10 @@ function App() {
           value={taskInput}
           type="text"
           placeholder="Add a task here"
-          className="block rounded-md border-black foucs:ring-blue-500 text-md p-4 mt-5 mb-3 mx-5"
+          className="block rounded-md border-black foucs:ring-blue-500 text-2xl p-4 mt-5 mb-3 mx-5"
           onChange={(e)=>{addtask(e)}}
-        />
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-10" onClick={()=>{createlist()}}>
+          />
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-10" onClick={createlist}>
           Add to List
         </button>
         <div>
@@ -99,38 +100,45 @@ function App() {
                 <div
                   key={index}
                   id={index}
-                  className="flex justify-between w-full text-right mb-2"
+                  className="flex justify-between w-full text-right mb-2 border-b-2 p-5"
                 >
                   {!item.isEditing ? (
                     <li
                       onClick={() => setCompleted(index)}
-                      className={`text-xl ${item.completed && "line-through"}`}
+                      className={`text-xl ${item.completed && "line-through"} text-left`}
                     >
                       {item.text}
                     </li>
                   ) : (
-                    <li>
-                      <input className='rounded-md text-md mr-2' onChange={(e) => changeTaskValue(e)} />
+                    <li className='flex justify-between'>
+                      <input
+                        className="rounded-md text-left text-xl mr-1 p-2 text-left"
+                        onChange={(e) => changeTaskValue(e)}
+                        value={  listArr[index].text}
+                      />
                       <button
                         onClick={() => setDone(index)}
-                        className="text-xl mr-5 cursor-pointer bg-blue-500 hover:bg-blue-700 p-1"
+                        className="text-xl mr-5 cursor-pointer bg-blue-500 hover:bg-blue-700 p-1 rounded-md "
                       >
                         done
                       </button>
                     </li>
                   )}
+                  <div>
+
                   <span
-                    className="text-xl mr-5 cursor-pointer bg-blue-500 hover:bg-blue-700 p-1"
+                    className="text-xl mr-5 cursor-pointer bg-blue-500 hover:bg-blue-700 p-1 ml-3 rounded-md"
                     onClick={(e) => deleteTodoItem(index)}
                   >
                     X
                   </span>
                   <span
-                    className="text-xl mr-5 cursor-pointer bg-blue-500 hover:bg-blue-700 p-1"
+                    className="text-xl mr-5 cursor-pointer bg-blue-500 hover:bg-blue-700 p-1 rounded-md"
                     onClick={(e) => editTask(index)}
                   >
-                    edit
+                    Edit
                   </span>
+                  </div>
                 </div>
               );
             })}
