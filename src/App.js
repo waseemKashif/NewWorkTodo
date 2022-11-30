@@ -1,6 +1,6 @@
 // import logo from "./logo.svg";
 import React, { useState, useEffect } from "react";
-import {AiOutlineDelete} from "react-icons/ai"
+import { AiOutlineDelete } from "react-icons/ai";
 // import './App.css';
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
   };
   const [taskInput, setTaskInput] = useState("");
   const [listArr, setListArr] = useState(getLocalStorageData());
-  const [Open,setOpen]=useState(false);
+  const [Open, setOpen] = useState(false);
 
   const addtask = (e) => {
     setTaskInput(e.target.value);
@@ -22,24 +22,22 @@ function App() {
   };
 
   const createlist = (e) => {
-    if(taskInput){
+    if (taskInput) {
       setListArr((previousList) => {
         return [
           ...previousList,
           { text: taskInput, completed: false, isEditing: false },
         ];
       });
-}else{
-  
-    setTimeout(() => {
-    setOpen(false);
-    }, 3000);
-    setOpen(true)
-}
+    } else {
+      setTimeout(() => {
+        setOpen(false);
+      }, 3000);
+      setOpen(true);
+    }
     // console.log(listArr);
     setTaskInput("");
     e.preventDefault();
-
   };
 
   //add to local storage
